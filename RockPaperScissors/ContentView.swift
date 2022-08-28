@@ -25,8 +25,8 @@ struct ContentView: View {
     var pierreCasseCiseaux = "La pierre casse les ciseaux"
     var ciseauxCoupePapier = "Les ciseaux coupent le papier"
     var paperEnveloppePierre = "Le papier enveloppe la pierre"
-    var gagne = "C'est gagné!"
-    var perdu = "Perdu ! Essaye encore"
+    var win = "C'est gagné!"
+    var lost = "Perdu ! Essaye encore"
     var draw = "Match nul"
     var drawExplain = "Vous avez choisi le même objet"
     
@@ -63,6 +63,7 @@ struct ContentView: View {
                 Spacer()
                 Button("Choose") {
                     /// Show the confirmation dialog
+                    showSheet.toggle()
                     
                 }.buttonStyle(.borderedProminent)
             }
@@ -72,11 +73,44 @@ struct ContentView: View {
         }
         
         // Alerts & Dialogs
+        .confirmationDialog("Choose your weapon", isPresented: $showSheet) {
+            Button("Rock") {
+                self.myChoice = 0
+                self.play()
+            }
+            Button("Paper") {
+                self.myChoice = 1
+                self.play()
+            }
+            Button("Cissors") {
+                self.myChoice = 2
+                self.play()
+            }
+        }
+
+    }
+    // HandleResults
+    func handleResults() -> (title: String, message: String, won: Bool) {
+        if (myChoice == computerChoice) {
+            return(draw, drawExplain, false)
+        } else if (myChoice == 0 && computerChoice == 2) {
+            return(win, pierreCasseCiseaux, true)
+        } else if (myChoice == 1 && computerChoice == 0) {
+            return(win, paperEnveloppePierre, true)
+        } else if (myChoice == 2 && computerChoice == 1) {
+            return(win, ciseauxCoupePapier, true)
+        } else if (myChoice == 0 && computerChoice == 1) {
+            return(lost, paperEnveloppePierre, false)
+        } else if (myChoice == 1 && computerChoice == 2) {
+            return(lost, ciseauxCoupePapier, false)
+        } else {
+            return(lost, pierreCasseCiseaux, false)
+        }
     }
     // Timer
     /// Play
     func play() {
-        
+        stopTimer()
     }
     /// PlayTimer
     func playTimer() {
