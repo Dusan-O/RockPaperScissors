@@ -67,7 +67,30 @@ struct ContentView: View {
                 }.buttonStyle(.borderedProminent)
             }
         }
+        .onAppear() {
+            playTimer()
+        }
+        
         // Alerts & Dialogs
+    }
+    // Timer
+    /// Play
+    func play() {
+        
+    }
+    /// PlayTimer
+    func playTimer() {
+        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { t in
+            if self.computerChoice == 2 {
+                self.computerChoice = 0
+            } else {
+                self.computerChoice += 1
+            }
+        })
+    }
+    /// StopTimer
+    func stopTimer() {
+        timer?.invalidate()
     }
 }
 
