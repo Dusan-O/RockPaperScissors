@@ -73,6 +73,16 @@ struct ContentView: View {
         }
         
         // Alerts & Dialogs
+        .alert(handleResults().title, isPresented: $showAlert, actions: {
+            Button("Ok") {
+                DispatchQueue.main.async {
+                    self.score = self.handleResults().won ? self.score + 1 : self.score
+                    self.playTimer()
+                }
+            }
+        }, message: {
+            Text(handleResults().message)
+        })
         .confirmationDialog("Choose your weapon", isPresented: $showSheet) {
             Button("Rock") {
                 self.myChoice = 0
@@ -111,6 +121,7 @@ struct ContentView: View {
     /// Play
     func play() {
         stopTimer()
+        showAlert = true
     }
     /// PlayTimer
     func playTimer() {
