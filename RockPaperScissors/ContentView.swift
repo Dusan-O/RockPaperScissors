@@ -31,9 +31,43 @@ struct ContentView: View {
     var drawExplain = "Vous avez choisi le même objet"
     
     var body: some View {
-        VStack {
-            
+        GeometryReader { proxy in
+            let idealSize = proxy.size.width / 3
+            VStack {
+                Text("Rock Paper Scissors")
+                    .font(.largeTitle)
+                    .foregroundColor(.mint)
+                    .bold()
+                Divider()
+                    .frame(height: 2)
+                    .overlay(.mint)
+                    .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
+                HStack {
+                    Image(icons[myChoice])
+                        .resizable()
+                        .frame(width: idealSize, height: idealSize)
+                    Spacer()
+                    Text("VS")
+                        .font(.largeTitle)
+                        .fontWeight(.heavy)
+                        .foregroundColor(.red)
+                    Spacer()
+                    Image(icons[computerChoice]).resizable()
+                    .frame(width: idealSize, height: idealSize)
+                }.padding()
+                Spacer()
+                Text("Score: \(score)")
+                    .font(.title)
+                    .italic()
+                    .foregroundColor(.mint)
+                Spacer()
+                Button("Choose") {
+                    /// Show the confirmation dialog
+                    
+                }.buttonStyle(.borderedProminent)
+            }
         }
+        // Alerts & Dialogs
     }
 }
 
